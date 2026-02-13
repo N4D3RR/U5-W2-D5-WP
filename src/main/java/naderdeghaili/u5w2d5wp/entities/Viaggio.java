@@ -19,7 +19,7 @@ public class Viaggio {
     @Column(nullable = false)
     private LocalDate dataViaggio;
     @Column(nullable = false)
-    private boolean statoViaggio; //false prenotato, true completato
+    private String statoViaggio; //false prenotato, true completato
 
     public Viaggio() {
     }
@@ -27,7 +27,7 @@ public class Viaggio {
     public Viaggio(String destinazione, LocalDate dataViaggio) {
         this.destinazione = destinazione;
         this.dataViaggio = dataViaggio;
-        this.statoViaggio = false;
+        this.statoViaggio = "PRENOTATO";
     }
 
 
@@ -51,12 +51,12 @@ public class Viaggio {
         this.dataViaggio = dataViaggio;
     }
 
-    public boolean isCompletato() {
+    public String getStatoViaggio() {
         return statoViaggio;
     }
 
-    public void setStatoViaggio(boolean completato) {
-        this.statoViaggio = completato;
+    public void setStatoViaggio(String statoViaggio) {
+        this.statoViaggio = statoViaggio;
     }
 
     @Override

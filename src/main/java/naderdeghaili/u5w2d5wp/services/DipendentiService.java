@@ -1,5 +1,7 @@
 package naderdeghaili.u5w2d5wp.services;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import lombok.extern.slf4j.Slf4j;
 import naderdeghaili.u5w2d5wp.entities.Dipendente;
 import naderdeghaili.u5w2d5wp.exceptions.NotFoundException;
@@ -9,7 +11,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -17,10 +22,12 @@ import java.util.UUID;
 public class DipendentiService {
 
     private final DipendentiRepository dipendentiRepository;
+    private final Cloudinary clUploader;
 
 
-    public DipendentiService(DipendentiRepository dipendentiRepository) {
+    public DipendentiService(DipendentiRepository dipendentiRepository, Cloudinary clUploader) {
         this.dipendentiRepository = dipendentiRepository;
+        this.clUploader = clUploader;
     }
 
     //GET LISTA DIPENDENTI
@@ -80,6 +87,21 @@ public class DipendentiService {
         Dipendente found = this.findById(dipendenteId);
         this.dipendentiRepository.delete(found);
         log.info("il dipendente è stato licenziato con successo");
+    }
+
+    //PATCH PROFILE PIC
+    public Dipendente uploadAvatar(UUID dipendenteId, MultipartFile file) {
+        Dipendente found = this.findById(dipendenteId);
+        try {
+            Map result = clUploader.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+            String imageUrl = (String) result.get("secure_url");
+            found.setAvatar(imageUrl);
+            return dipendentiRepository.save(found);
+
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+
     }
 
 }

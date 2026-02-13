@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -73,6 +74,14 @@ public class DipendentiController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteViaggio(@PathVariable UUID dipendenteId) {
         this.dipendentiService.findByIdAndDelete(dipendenteId);
+    }
+
+    //CLOUDINARY
+    @PatchMapping("/{dipendenteId}/avatar")
+    public Dipendente uploadImg(@PathVariable UUID dipendenteId, @RequestParam("profile_picture") MultipartFile file) {
+
+        Dipendente modifiedAvatarDipendente = this.dipendentiService.uploadAvatar(dipendenteId, file);
+        return modifiedAvatarDipendente;
     }
 
 

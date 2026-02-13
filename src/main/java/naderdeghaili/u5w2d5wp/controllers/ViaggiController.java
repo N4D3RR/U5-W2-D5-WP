@@ -6,6 +6,7 @@ import naderdeghaili.u5w2d5wp.entities.Viaggio;
 import naderdeghaili.u5w2d5wp.exceptions.ValidationException;
 import naderdeghaili.u5w2d5wp.payloads.ModifyViaggioDTO;
 import naderdeghaili.u5w2d5wp.payloads.NewViaggioDTO;
+import naderdeghaili.u5w2d5wp.payloads.StatoViaggioDTO;
 import naderdeghaili.u5w2d5wp.services.ViaggiService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -74,5 +75,13 @@ public class ViaggiController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteViaggio(@PathVariable UUID viaggioId) {
         this.viaggiService.findByIdAndDelete(viaggioId);
+    }
+
+
+    //PATCH STATO VIAGGIO
+    @PatchMapping("/{viaggioId}/stato")
+    public Viaggio updateStatoViaggio(@PathVariable UUID viaggioId, @RequestBody StatoViaggioDTO payload) {
+
+        return viaggiService.updateStato(viaggioId, payload.statoViaggio());
     }
 }

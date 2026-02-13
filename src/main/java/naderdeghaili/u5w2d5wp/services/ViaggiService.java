@@ -46,7 +46,7 @@ public class ViaggiService {
     //PUT VIAGGIO
     public Viaggio findByIdAndUpdate(UUID viaggioId, ModifyViaggioDTO payload) {
         Viaggio found = this.findById(viaggioId);
-        
+
         found.setDestinazione(payload.destinazione());
         found.setDataViaggio(payload.dataViaggio());
         found.setStatoViaggio(payload.statoViaggio());
@@ -63,5 +63,17 @@ public class ViaggiService {
         Viaggio found = this.findById(viaggioId);
         this.viaggiRepository.delete(found);
         log.info("il viaggio è stato cancellato con successo");
+    }
+
+
+    //PATCH STATO VIAGGIO
+    public Viaggio updateStato(UUID viaggioId, String statoViaggio) {
+        Viaggio found = this.findById(viaggioId);
+
+        found.setStatoViaggio(statoViaggio);
+
+        return viaggiRepository.save(found);
+
+
     }
 }
