@@ -1,0 +1,71 @@
+package naderdeghaili.u5w2d5wp.entities;
+
+
+import jakarta.persistence.*;
+
+import java.time.LocalDate;
+import java.util.UUID;
+
+@Entity
+@Table(name = "viaggi")
+public class Viaggio {
+
+    @Id
+    @GeneratedValue
+    private UUID id;
+
+    @Column(nullable = false)
+    private String destinazione;
+    @Column(nullable = false)
+    private LocalDate dataViaggio;
+    @Column(nullable = false)
+    private boolean statoViaggio; //false prenotato, true completato
+
+    public Viaggio() {
+    }
+
+    public Viaggio(String destinazione, LocalDate dataViaggio) {
+        this.destinazione = destinazione;
+        this.dataViaggio = dataViaggio;
+        this.statoViaggio = false;
+    }
+
+
+    public UUID getId() {
+        return id;
+    }
+
+    public String getDestinazione() {
+        return destinazione;
+    }
+
+    public void setDestinazione(String destinazione) {
+        this.destinazione = destinazione;
+    }
+
+    public LocalDate getDataViaggio() {
+        return dataViaggio;
+    }
+
+    public void setDataViaggio(LocalDate dataViaggio) {
+        this.dataViaggio = dataViaggio;
+    }
+
+    public boolean isCompletato() {
+        return statoViaggio;
+    }
+
+    public void setStatoViaggio(boolean completato) {
+        this.statoViaggio = completato;
+    }
+
+    @Override
+    public String toString() {
+        return "Viaggio: " +
+                "id: " + id +
+                " | destinazione: " + destinazione +
+                " | data Viaggio: " + dataViaggio +
+                " | stato Viaggio: " + statoViaggio
+                ;
+    }
+}
