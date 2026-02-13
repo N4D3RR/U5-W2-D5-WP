@@ -43,7 +43,7 @@ public class DipendentiController {
                     .toList();
             throw new ValidationException((errorList));
         } else {
-            return null;
+            return this.dipendentiService.saveDipendente(payload);
         }
     }
 
@@ -64,7 +64,7 @@ public class DipendentiController {
                     .toList();
             throw new ValidationException((errorList));
         } else {
-            return null;
+            return this.dipendentiService.findByIdAndUpdate(dipendenteId, payload);
         }
     }
 
@@ -72,7 +72,7 @@ public class DipendentiController {
     @DeleteMapping("/{dipendenteId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteViaggio(@PathVariable UUID dipendenteId) {
-        ;
+        this.dipendentiService.findByIdAndDelete(dipendenteId);
     }
 
 

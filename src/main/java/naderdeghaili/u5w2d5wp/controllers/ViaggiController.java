@@ -30,7 +30,7 @@ public class ViaggiController {
     @GetMapping
     public Page<Viaggio> findAll(@RequestParam(defaultValue = "0") @Min(0) int page,
                                  @RequestParam(defaultValue = "15") @Min(0) @Max(15) int size) {
-        return null;
+        return this.viaggiService.findAll(page, size);
     }
 
     //POST VIAGGIO
@@ -44,7 +44,7 @@ public class ViaggiController {
                     .toList();
             throw new ValidationException((errorList));
         } else {
-            return null;
+            return this.viaggiService.saveViaggio(payload);
         }
     }
 
@@ -65,7 +65,7 @@ public class ViaggiController {
                     .toList();
             throw new ValidationException((errorList));
         } else {
-            return null;
+            return this.viaggiService.findByIdAndUpdate(viaggioId, payload);
         }
     }
 
@@ -73,6 +73,6 @@ public class ViaggiController {
     @DeleteMapping("/{viaggioId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteViaggio(@PathVariable UUID viaggioId) {
-
+        this.viaggiService.findByIdAndDelete(viaggioId);
     }
 }
